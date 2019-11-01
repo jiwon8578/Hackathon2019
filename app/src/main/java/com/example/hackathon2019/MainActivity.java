@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     String data;
 
     String name;
+
+    double[] location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
         Thread worker = new Thread() {
             public void run() {
                 try {
-                    socket = new Socket(" 10.101.10.39", 7777);
+                    socket = new Socket("172.20.10.2", 9000);
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(
                             socket.getInputStream()));
-                    out.print(name + "\n");
+
+                    double lat = 37.5443003;
+                    double lng = 126.9722328;
+                    out.print(name + "," + String.valueOf(lat) + "," + String.valueOf(lng) + "\n");
                     out.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -84,12 +91,23 @@ public class MainActivity extends AppCompatActivity {
                 while (true) {
                     try {
                         data = in.readLine();
-                        output.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                output.append("\n" + data);
-                            }
-                        });
+                        if(data.contains("location >> ")) {
+                            data = data.substring(11);
+                            String[] test;
+                            test = data.split(", ");
+                            location[0] = Double.parseDouble(test[0]);
+                            location[1] = Double.parseDouble(test[1]);
+                            Toast.makeText(getApplicationContext(), test[0],Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), test[1],Toast.LENGTH_LONG).show();
+                        } else {
+                            output.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    output.append("\n" + data);
+                                }
+                            });
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
