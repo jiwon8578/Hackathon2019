@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,6 +24,7 @@ import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPOIItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -92,6 +94,7 @@ public class MapPoi extends AppCompatActivity implements TMapGpsManager.onLocati
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 TMapPoint point = new TMapPoint(avglat, avglng); //아무위치나..
+                                TMapPoint point1 = new TMapPoint(MainActivity.curLat,MainActivity.curLng);
                                 String categoryname = list[position];
 
                                 try {
@@ -115,6 +118,16 @@ public class MapPoi extends AppCompatActivity implements TMapGpsManager.onLocati
                                                         }
                                                 }
                                         });
+                                        tmapdata.findPathData(point1,point, new TMapData.FindPathDataListenerCallback() {
+                                                @Override
+                                                public void onFindPathData(TMapPolyLine polyLine) {
+                                                        polyLine.setLineColor(Color.BLUE);
+                                                        polyLine.setLineWidth(2);
+                                                        tmapView.addTMapPath(polyLine);
+                                                        tmapView.addTMapPolyLine("Line1", polyLine);
+                                                }
+                                        });
+
 
                                 }catch (Exception e){
                                         e.printStackTrace();

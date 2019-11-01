@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Thread worker = new Thread() {
             public void run() {
                 try {
-                    socket = new Socket("172.20.10.2", 5555);
+                    socket = new Socket("10.101.26.38", 5555);
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(
                             socket.getInputStream()));
