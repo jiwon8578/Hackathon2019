@@ -20,6 +20,7 @@
         android:layout_marginRight="30dp"
         android:textSize="15dp"
         android:textColor="@android:color/black"
-        android:textStyle="italic"/>
+        android:textStyle="italic"
+        android:fontFamily="@font/light"/>
 
 </LinearLayout>
