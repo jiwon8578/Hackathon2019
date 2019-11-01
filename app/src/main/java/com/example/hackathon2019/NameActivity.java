@@ -34,7 +34,11 @@ public class NameActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name.getText().toString());
                 Intent intent = new Intent(NameActivity.this, MainActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }

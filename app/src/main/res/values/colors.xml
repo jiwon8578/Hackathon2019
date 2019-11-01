@@ -7,4 +7,6 @@
     <color name="darkpurple">#2c004b</color>
     <color name="yellow">#ffb200</color>
     <color name="orange">#ff9200</color>
+    <color name="lightblue">#92B8D8</color>
+    <color name="darkblue">#739DC8</color>
 </resources>
